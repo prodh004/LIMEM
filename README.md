@@ -25,13 +25,6 @@ The phenology detection algorithm identifies four seasonal breakpoints through a
 
 Annual TB time series are simulated using a sequential detection–estimation framework. A supervised XGBoost classifier trained on 2017–2024 SMAP observations identifies six phenological states (F1, M1, M2, M3, W, F0) using a 5-day rolling window of dual-polarized TBs. LIMEM is then inverted based on the detected state: roughness parameters are calibrated during F1; snow and ice wetness are jointly retrieved during M1 via Tikhonov-regularized inversion subject to w_s ≥ w_i; only ice wetness is retrieved during M2; fractional ice cover is retrieved via linear mixing during M3 and F0; and open-water TBs are computed analytically with daily roughness inversion.
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/prodh004/LIMEM/main/Figure/Fig_02.jpeg" width="600"/>
-</p>
-<p align="center">
-  <em>Figure 2. Flowchart of the sequential detection–estimation framework for annual L-band TB simulation. At each time step t, the XGBoost classifier assigns a phenological state from a 5-day rolling window of dual-polarized TB observations, followed by state-specific LIMEM inversion to simulate TBs.</em>
-</p>
-
 ---
 
 ## Data
@@ -86,3 +79,28 @@ results = predict_annual_tb(tbh, tbv, lmlt, lict, licd, t2m, snow_depth,
                              final_model, LakeIceEmit, window=5)
 # Returns tbh_pred, tbv_pred, classes, h_p, Q, m2_ws
 ```
+
+---
+
+## Results
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/prodh004/LIMEM/main/Figure/Results_01.jpg" width="700"/>
+</p>
+<p align="center">
+  <em>L-band TB time series at H and V polarizations alongside Sentinel-2 false-color imagery capturing the freeze–thaw cycle of Great Bear Lake (66.42°N, 121.23°W).</em>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/prodh004/LIMEM/main/Figure/Results_02.jpg" width="700"/>
+</p>
+<p align="center">
+  <em>Lake ice phenology retrievals for Great Bear Lake in 2018 comparing SMAP (i), IMS (ii), Sentinel-2 (iii), and MODIS (iv) — frozen (white), melting (blue), open-water (black), freezing (gray).</em>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/prodh004/LIMEM/main/Figure/Results_03.jpg" width="700"/>
+</p>
+<p align="center">
+  <em>Observed and simulated polarized TB time series for five freshwater lakes during 2016, with shaded regions indicating detected phenological states (F1, M1, M2, M3, W, F0).</em>
+</p>
